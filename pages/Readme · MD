@@ -1,0 +1,41 @@
+# 📈 Global Market Cap Top 10 — Stock Dashboard
+
+야후 파이낸스 데이터를 활용한 글로벌 시가총액 Top 10 주식 대시보드입니다.
+
+## Features
+
+- **KPI 카드** — 현재가 / 당일 변동률 / 기간 수익률
+- **라인 차트** — Normalized(Base 100) / 절대가 / 캔들스틱 3가지 모드
+- **월별 수익률 히트맵** — 종목 × 월 매트릭스
+- **기간 수익률 막대 차트** — 종목 간 성과 비교
+- **변동성 차트** — 30일 롤링 연환산 변동성
+- **상관계수 매트릭스** — 종목 간 일별 수익률 상관관계
+
+## 포함 종목 (글로벌 시가총액 Top 10)
+
+| 기업 | 티커 |
+|------|------|
+| Apple | AAPL |
+| NVIDIA | NVDA |
+| Microsoft | MSFT |
+| Amazon | AMZN |
+| Alphabet | GOOGL |
+| Saudi Aramco | 2222.SR |
+| Meta | META |
+| Berkshire Hathaway | BRK-B |
+| TSMC | TSM |
+| Broadcom | AVGO |
+
+## Streamlit Cloud 배포 방법
+
+1. 이 폴더를 GitHub 리포지토리에 올리세요.
+2. [share.streamlit.io](https://share.streamlit.io) 접속
+3. `New app` → GitHub 리포 연결 → `app.py` 선택
+4. Deploy!
+
+## 로컬 실행
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```v
