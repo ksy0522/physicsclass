@@ -42,13 +42,13 @@ features = [
 cols = st.columns(4)
 for col, (icon, title, desc, color) in zip(cols, features):
     col.markdown(f"""
-    <div style="background:#0d1929; border:1px solid {color}44;
+    <div style="background:#f8fafc; border:1px solid {color}44;
                 border-top:3px solid {color}; border-radius:12px;
                 padding:1.4rem; min-height:160px">
       <div style="font-size:2rem">{icon}</div>
       <div style="font-family:'Space Mono',monospace; font-size:.95rem;
-                  font-weight:700; color:#e8edf5; margin:.5rem 0 .3rem">{title}</div>
-      <div style="font-size:.82rem; color:#5580a0; white-space:pre-line; line-height:1.5">{desc}</div>
+                  font-weight:700; color:#1a1a2e; margin:.5rem 0 .3rem">{title}</div>
+      <div style="font-size:.82rem; color:#4a6a8a; white-space:pre-line; line-height:1.5">{desc}</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -80,14 +80,14 @@ with right:
                                   (("반도체","type-semi","#00c864") if bg < 3 else ("부도체","type-insul","#9060ff"))
         st.markdown(f"""
         <div style="display:flex; align-items:center; gap:.8rem;
-                    background:#0d1929; border:1px solid #1e3050; border-radius:8px;
+                    background:#f8fafc; border:1px solid #dde3ea; border-radius:8px;
                     padding:.55rem 1rem; margin-bottom:.5rem">
           <div style="font-family:'Space Mono',monospace; font-size:1.1rem;
                       font-weight:700; color:{color}; min-width:50px">{bg}</div>
-          <div style="font-size:.7rem; color:#5580a0; min-width:24px">eV</div>
+          <div style="font-size:.7rem; color:#4a6a8a; min-width:24px">eV</div>
           <div style="flex:1">
-            <div style="font-size:.88rem; color:#e8edf5; font-weight:600">{name}</div>
-            <div style="font-size:.72rem; color:#5580a0">{use}</div>
+            <div style="font-size:.88rem; color:#1a1a2e; font-weight:600">{name}</div>
+            <div style="font-size:.72rem; color:#4a6a8a">{use}</div>
           </div>
           <span class="type-badge {badge_cls}">{label}</span>
         </div>
