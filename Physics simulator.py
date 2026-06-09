@@ -5,8 +5,26 @@ import matplotlib.patches as patches
 from matplotlib.patches import FancyArrowPatch
 import matplotlib.gridspec as gridspec
 from matplotlib import font_manager
+import matplotlib as mpl
 import warnings
+import urllib.request
+import os
 warnings.filterwarnings('ignore')
+
+# ── 한글 폰트 설정 ─────────────────────────────────────────────────────────────
+@st.cache_resource
+def setup_korean_font():
+    font_path = "/tmp/NanumGothic.ttf"
+    if not os.path.exists(font_path):
+        url = "https://github.com/google/fonts/raw/main/ofl/nanumgothic/NanumGothic-Regular.ttf"
+        urllib.request.urlretrieve(url, font_path)
+    font_manager.fontManager.addfont(font_path)
+    font_name = font_manager.FontProperties(fname=font_path).get_name()
+    mpl.rcParams['font.family'] = font_name
+    mpl.rcParams['axes.unicode_minus'] = False
+    return font_name
+
+setup_korean_font()
 
 # ── 페이지 설정 ──────────────────────────────────────────────────────────────
 st.set_page_config(
