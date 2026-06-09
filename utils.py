@@ -30,17 +30,18 @@ COMMON_CSS = """
 
 html, body, [class*="css"] { font-family: 'Space Grotesk', sans-serif; }
 
-.stApp { background: #080f1a; color: #e8edf5; }
+/* ── 전체 배경 흰색 ── */
+.stApp { background: #ffffff; color: #1a1a2e; }
 
+/* ── 사이드바 ── */
 section[data-testid="stSidebar"] {
-    background: #0d1929 !important;
-    border-right: 1px solid #1e3050;
+    background: #f5f7fa !important;
+    border-right: 1px solid #e0e6ed;
 }
-section[data-testid="stSidebar"] * { color: #c8d6e8 !important; }
+section[data-testid="stSidebar"] * { color: #2c3e50 !important; }
 
-/* 사이드바 nav 링크 스타일 */
 [data-testid="stSidebarNav"] a {
-    color: #7fa8cc !important;
+    color: #3a5a7a !important;
     font-family: 'Space Grotesk', sans-serif !important;
     font-size: .92rem !important;
     border-radius: 8px !important;
@@ -48,44 +49,46 @@ section[data-testid="stSidebar"] * { color: #c8d6e8 !important; }
 }
 [data-testid="stSidebarNav"] a:hover,
 [data-testid="stSidebarNav"] [aria-selected="true"] a {
-    background: rgba(0,200,255,.1) !important;
-    color: #00c8ff !important;
+    background: rgba(0,120,200,.08) !important;
+    color: #0078c8 !important;
 }
 
-/* 히어로 배너 */
+/* ── 히어로 배너 (파란 계열 유지, 텍스트는 흰색) ── */
 .hero {
-    background: linear-gradient(135deg, #0d1929 0%, #0a2040 60%, #0d2d4a 100%);
-    border: 1px solid #1e3a5f; border-radius: 16px;
+    background: linear-gradient(135deg, #0d3b6e 0%, #1a5fa8 60%, #0078c8 100%);
+    border: none; border-radius: 16px;
     padding: 2rem 2.5rem; margin-bottom: 1.5rem;
     position: relative; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,120,200,.2);
 }
 .hero::before {
     content: ''; position: absolute; inset: 0;
     background:
-        repeating-linear-gradient(0deg,   transparent, transparent 28px, rgba(0,200,255,.04) 28px, rgba(0,200,255,.04) 29px),
-        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(0,200,255,.04) 28px, rgba(0,200,255,.04) 29px);
+        repeating-linear-gradient(0deg,   transparent, transparent 28px, rgba(255,255,255,.04) 28px, rgba(255,255,255,.04) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(255,255,255,.04) 28px, rgba(255,255,255,.04) 29px);
     pointer-events: none;
 }
 .hero h1 {
     font-family: 'Space Mono', monospace; font-size: 1.9rem; font-weight: 700;
-    color: #fff; margin: 0 0 .4rem; letter-spacing: -.02em;
+    color: #ffffff; margin: 0 0 .4rem; letter-spacing: -.02em;
 }
-.hero p { color: #7fa8cc; font-size: .95rem; margin: 0; }
+.hero p { color: rgba(255,255,255,.8); font-size: .95rem; margin: 0; }
 .hero-tag {
     display: inline-block;
-    background: rgba(0,200,255,.12); border: 1px solid rgba(0,200,255,.3);
-    color: #00c8ff; padding: 3px 10px; border-radius: 20px;
+    background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.4);
+    color: #ffffff; padding: 3px 10px; border-radius: 20px;
     font-size: .75rem; font-family: 'Space Mono', monospace;
     margin-right: 6px; margin-bottom: 8px;
 }
 
-/* 소재 카드 */
+/* ── 소재 카드 ── */
 .mat-card {
-    background: #0d1929; border: 1px solid #1e3050;
+    background: #ffffff; border: 1px solid #e0e6ed;
     border-radius: 12px; display: flex; overflow: hidden;
-    margin-bottom: .9rem; transition: border-color .2s;
+    margin-bottom: .9rem; transition: border-color .2s, box-shadow .2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
-.mat-card:hover { border-color: #00c8ff; }
+.mat-card:hover { border-color: #0078c8; box-shadow: 0 4px 16px rgba(0,120,200,.12); }
 .mat-card-gauge {
     width: 64px; min-width: 64px;
     display: flex; flex-direction: column;
@@ -93,61 +96,71 @@ section[data-testid="stSidebar"] * { color: #c8d6e8 !important; }
     padding: .8rem .4rem; font-family: 'Space Mono', monospace;
 }
 .mat-card-gauge .gap-val { font-size: 1.25rem; font-weight: 700; line-height: 1; }
-.mat-card-gauge .gap-unit { font-size: .62rem; color: #7fa8cc; margin-top: 2px; }
+.mat-card-gauge .gap-unit { font-size: .62rem; color: #8a9bb0; margin-top: 2px; }
 .mat-card-body { padding: .85rem 1rem; flex: 1; }
 .mat-card-body .formula {
-    font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #e8edf5;
+    font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #1a1a2e;
 }
-.mat-card-body .mpid { font-size: .72rem; color: #5580a0; font-family: 'Space Mono', monospace; margin-bottom: .4rem; }
+.mat-card-body .mpid { font-size: .72rem; color: #8a9bb0; font-family: 'Space Mono', monospace; margin-bottom: .4rem; }
 .mat-card-meta { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .4rem; }
 .meta-chip {
-    background: #0a1e32; border: 1px solid #1e3a5f;
-    border-radius: 6px; padding: 2px 8px; font-size: .73rem; color: #7fa8cc;
+    background: #f0f4f8; border: 1px solid #dde3ea;
+    border-radius: 6px; padding: 2px 8px; font-size: .73rem; color: #4a6a8a;
 }
 
-/* 배지 */
+/* ── 배지 ── */
 .type-badge {
     display: inline-block; border-radius: 6px;
     padding: 2px 10px; font-size: .73rem; font-weight: 600; margin-bottom: .3rem;
 }
-.type-metal { background: rgba(255,165,0,.15); color: #ffa500; border: 1px solid rgba(255,165,0,.3); }
-.type-semi  { background: rgba(0,200,100,.15);  color: #00c864; border: 1px solid rgba(0,200,100,.3); }
-.type-insul { background: rgba(120,80,255,.15); color: #9060ff; border: 1px solid rgba(120,80,255,.3); }
+.type-metal { background: rgba(217,119,6,.12);  color: #b45309; border: 1px solid rgba(217,119,6,.3); }
+.type-semi  { background: rgba(5,150,105,.12);  color: #047857; border: 1px solid rgba(5,150,105,.3); }
+.type-insul { background: rgba(109,40,217,.12); color: #6d28d9; border: 1px solid rgba(109,40,217,.3); }
 
-/* 섹션 헤더 */
+/* ── 섹션 헤더 ── */
 .sec-head {
     font-family: 'Space Mono', monospace; font-size: .7rem;
     letter-spacing: .12em; text-transform: uppercase;
-    color: #00c8ff; margin: 1.5rem 0 .8rem;
-    border-bottom: 1px solid #1e3050; padding-bottom: .4rem;
+    color: #0078c8; margin: 1.5rem 0 .8rem;
+    border-bottom: 2px solid #e0e6ed; padding-bottom: .4rem;
 }
 
-/* 입력 필드 */
+/* ── 입력 필드 ── */
 .stTextInput > div > div > input,
-.stNumberInput > div > div > input { background: #0d1929 !important; border: 1px solid #1e3050 !important; color: #e8edf5 !important; border-radius: 8px !important; }
-.stSlider > div { color: #c8d6e8; }
-div[data-testid="stMetricValue"] { font-family: 'Space Mono', monospace !important; color: #00c8ff !important; font-size: 1.4rem !important; }
-div[data-testid="stMetricLabel"] { color: #7fa8cc !important; }
+.stNumberInput > div > div > input {
+    background: #ffffff !important; border: 1px solid #d0d8e4 !important;
+    color: #1a1a2e !important; border-radius: 8px !important;
+}
+.stSlider > div { color: #2c3e50; }
+div[data-testid="stMetricValue"] {
+    font-family: 'Space Mono', monospace !important;
+    color: #0078c8 !important; font-size: 1.4rem !important;
+}
+div[data-testid="stMetricLabel"] { color: #4a6a8a !important; }
 
-/* 버튼 */
+/* ── 버튼 ── */
 .stButton > button {
-    background: linear-gradient(135deg, #004d80, #006fa6) !important;
+    background: linear-gradient(135deg, #0062a3, #0078c8) !important;
     color: white !important; border: none !important;
     border-radius: 8px !important; font-family: 'Space Grotesk', sans-serif !important;
     font-weight: 600 !important; padding: .5rem 1.4rem !important;
+    box-shadow: 0 2px 8px rgba(0,120,200,.25) !important;
 }
-.stButton > button:hover { background: linear-gradient(135deg, #006fa6, #0090cc) !important; }
+.stButton > button:hover {
+    background: linear-gradient(135deg, #0078c8, #0090e0) !important;
+    box-shadow: 0 4px 12px rgba(0,120,200,.35) !important;
+}
 
-/* 박스 */
+/* ── 박스 ── */
 .info-box {
-    background: rgba(0,200,255,.07); border-left: 3px solid #00c8ff;
+    background: #eff6ff; border-left: 3px solid #0078c8;
     border-radius: 0 8px 8px 0; padding: .8rem 1rem; margin: .5rem 0;
-    font-size: .88rem; color: #a8c8e0; line-height: 1.6;
+    font-size: .88rem; color: #1e4a7a; line-height: 1.6;
 }
 .warn-box {
-    background: rgba(255,165,0,.07); border-left: 3px solid #ffa500;
+    background: #fffbeb; border-left: 3px solid #d97706;
     border-radius: 0 8px 8px 0; padding: .8rem 1rem; margin: .5rem 0;
-    font-size: .85rem; color: #c8a860; line-height: 1.6;
+    font-size: .85rem; color: #92400e; line-height: 1.6;
 }
 </style>
 """
