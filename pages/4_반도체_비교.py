@@ -64,15 +64,15 @@ for col, name in zip(cols, names):
     _, badge_cls, color = classify(d["band_gap"], d["is_metal"])
     label = "도체" if d["is_metal"] or d["band_gap"] == 0 else ("반도체" if d["band_gap"] < 3 else "부도체")
     col.markdown(f"""
-    <div style="background:#0d1929; border:1px solid {color}66;
+    <div style="background:#f8fafc; border:1px solid {color}66;
                 border-top:3px solid {color}; border-radius:12px;
                 padding:1rem; text-align:center">
       <div style="font-family:'Space Mono',monospace; font-size:2rem;
                   font-weight:700; color:{color}; line-height:1">{d['band_gap']}</div>
-      <div style="font-size:.65rem; color:#5580a0; margin-bottom:.4rem">eV</div>
+      <div style="font-size:.65rem; color:#4a6a8a; margin-bottom:.4rem">eV</div>
       <div style="font-family:'Space Mono',monospace; font-size:.95rem;
-                  font-weight:700; color:#e8edf5">{d['formula']}</div>
-      <div style="font-size:.72rem; color:#5580a0; margin-bottom:.4rem">{name.split('(')[0].strip()}</div>
+                  font-weight:700; color:#1a1a2e">{d['formula']}</div>
+      <div style="font-size:.72rem; color:#4a6a8a; margin-bottom:.4rem">{name.split('(')[0].strip()}</div>
       <span class="type-badge {badge_cls}">{label}</span>
     </div>
     """, unsafe_allow_html=True)
@@ -81,18 +81,18 @@ for col, name in zip(cols, names):
 st.markdown('<div class="sec-head">물성 비교 차트</div>', unsafe_allow_html=True)
 
 fig, axes = plt.subplots(1, 3, figsize=(13, 5))
-fig.patch.set_facecolor("#080f1a")
+fig.patch.set_facecolor("white")
 
 for ax in axes:
-    ax.set_facecolor("#0d1929")
-    ax.tick_params(colors="#5580a0")
-    for sp in ax.spines.values(): sp.set_color("#1e3050")
+    ax.set_facecolor("#f8fafc")
+    ax.tick_params(colors="#333333")
+    for sp in ax.spines.values(): sp.set_color("#dde3ea")
 
 def labeled_bar(ax, vals, title, ylabel):
     bars = ax.bar(short_names, vals,
-                  color=BAR_COLORS[:len(names)], edgecolor="#0d1929", linewidth=1.5)
+                  color=BAR_COLORS[:len(names)], edgecolor="white", linewidth=1.5)
     ax.set_title(title, color="white", fontweight="bold")
-    ax.set_ylabel(ylabel, color="#7fa8cc")
+    ax.set_ylabel(ylabel, color="#333333")
     for bar, val in zip(bars, vals):
         ax.text(bar.get_x() + bar.get_width() / 2,
                 bar.get_height() + abs(max(vals, default=0)) * 0.02,
@@ -124,15 +124,15 @@ prop_rows = {
 }
 
 tbl = "<table style='width:100%;border-collapse:collapse;font-size:.85rem'>"
-tbl += "<tr style='border-bottom:2px solid #1e3050'>"
+tbl += "<tr style='border-bottom:2px solid #dde3ea'>"
 tbl += "<th style='padding:.6rem 1rem;text-align:left;color:#00c8ff;font-family:Space Mono,monospace'>물성</th>"
 for n in names:
-    tbl += f"<th style='padding:.6rem 1rem;text-align:center;color:#e8edf5'>{n.split('(')[0]}</th>"
+    tbl += f"<th style='padding:.6rem 1rem;text-align:center;color:#1a1a2e'>{n.split('(')[0]}</th>"
 tbl += "</tr>"
 
 for prop_label, key in prop_rows.items():
-    tbl += "<tr style='border-bottom:1px solid #1e3050'>"
-    tbl += f"<td style='padding:.55rem 1rem;color:#7fa8cc'>{prop_label}</td>"
+    tbl += "<tr style='border-bottom:1px solid #dde3ea'>"
+    tbl += f"<td style='padding:.55rem 1rem;color:#3a5a7a'>{prop_label}</td>"
     for n in names:
         val = data[n][key]
         if key == "band_gap":
@@ -140,12 +140,12 @@ for prop_label, key in prop_rows.items():
             cell = f"<span style='color:{color};font-family:Space Mono,monospace;font-weight:700'>{val}</span>"
         else:
             cell = f"<span style='font-family:Space Mono,monospace'>{val}</span>"
-        tbl += f"<td style='padding:.55rem 1rem;text-align:center;color:#c8d6e8'>{cell}</td>"
+        tbl += f"<td style='padding:.55rem 1rem;text-align:center;color:#2c3e50'>{cell}</td>"
     tbl += "</tr>"
 tbl += "</table>"
 
 st.markdown(f"""
-<div style="background:#0d1929;border:1px solid #1e3050;border-radius:12px;overflow:hidden">
+<div style="background:#f8fafc;border:1px solid #dde3ea;border-radius:12px;overflow:hidden">
 {tbl}
 </div>
 """, unsafe_allow_html=True)
