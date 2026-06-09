@@ -266,21 +266,31 @@ DARK_BG   = "#0A0E1A"
 DARK_GRID = "#1E2D40"
 DARK_TEXT = "#8BA5C4"
 
-PLOTLY_LAYOUT = dict(
-    paper_bgcolor=DARK_BG,
-    plot_bgcolor=DARK_BG,
-    font=dict(family="Inter, sans-serif", color=DARK_TEXT, size=12),
-    xaxis=dict(gridcolor=DARK_GRID, zerolinecolor=DARK_GRID, tickfont=dict(size=11)),
-    yaxis=dict(gridcolor=DARK_GRID, zerolinecolor=DARK_GRID, tickfont=dict(size=11)),
-    legend=dict(
-        bgcolor="#0F1626", bordercolor=DARK_GRID, borderwidth=1,
-        font=dict(size=11, color="#C8D8EC"),
-        orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0
-    ),
-    hovermode="x unified",
-    hoverlabel=dict(bgcolor="#0F1626", bordercolor=DARK_GRID, font_color="#E8EDF5"),
-    margin=dict(l=0, r=0, t=40, b=0),
-)
+def apply_layout(fig, hovermode="x unified", height=None, margin=None, title_text=None, extra=None):
+    """Apply the shared dark theme layout to a Plotly figure."""
+    kwargs = dict(
+        paper_bgcolor=DARK_BG,
+        plot_bgcolor=DARK_BG,
+        font=dict(family="Inter, sans-serif", color=DARK_TEXT, size=12),
+        xaxis=dict(gridcolor=DARK_GRID, zerolinecolor=DARK_GRID, tickfont=dict(size=11)),
+        yaxis=dict(gridcolor=DARK_GRID, zerolinecolor=DARK_GRID, tickfont=dict(size=11)),
+        legend=dict(
+            bgcolor="#0F1626", bordercolor=DARK_GRID, borderwidth=1,
+            font=dict(size=11, color="#C8D8EC"),
+            orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0,
+        ),
+        hovermode=hovermode,
+        hoverlabel=dict(bgcolor="#0F1626", bordercolor=DARK_GRID, font_color="#E8EDF5"),
+        margin=margin if margin else dict(l=0, r=0, t=40, b=0),
+    )
+    if height:
+        kwargs["height"] = height
+    if title_text:
+        kwargs["title"] = dict(text=title_text, font_color="#C8D8EC", font_size=14)
+    if extra:
+        kwargs.update(extra)
+    fig.update_layout(**kwargs)
+    return fig
 
 if chart_type == "Normalized (Base 100)":
     norm_df = compute_normalized(price_df[selected_tickers].dropna(how="all"))
@@ -298,7 +308,7 @@ if chart_type == "Normalized (Base 100)":
             hovertemplate=f"<b>{name}</b><br>%{{x|%b %d, %Y}}<br>Index: %{{y:.1f}}<extra></extra>",
         ))
     fig.add_hline(y=100, line_dash="dot", line_color="#4A6080", line_width=1)
-    fig.update_layout(**PLOTLY_LAYOUT, title=dict(text=f"Normalized Performance (Base=100) — {selected_period_label}", font_color="#C8D8EC", font_size=14))
+    apply_layout(fig, title_text=f"Normalized Performance (Base=100) — {selected_period_label}")
     fig.update_yaxes(ticksuffix="")
 
 elif chart_type == "Absolute Price":
@@ -315,7 +325,7 @@ elif chart_type == "Absolute Price":
             line=dict(color=color, width=2),
             hovertemplate=f"<b>{name}</b><br>%{{x|%b %d, %Y}}<br>${{y:,.2f}}<extra></extra>",
         ))
-    fig.update_layout(**PLOTLY_LAYOUT, title=dict(text=f"Closing Price (USD) — {selected_period_label}", font_color="#C8D8EC", font_size=14))
+    apply_layout(fig, title_text=f"Closing Price (USD) — {selected_period_label}")
     fig.update_yaxes(tickprefix="$")
 
 else:  # Candlestick — single ticker
@@ -332,7 +342,7 @@ else:  # Candlestick — single ticker
         decreasing_line_color="#FF4D6A",
         name=pick,
     ))
-    fig.update_layout(**PLOTLY_LAYOUT, title=dict(text=f"{pick} Candlestick — {selected_period_label}", font_color="#C8D8EC", font_size=14))
+    apply_layout(fig, title_text=f"{pick} Candlestick — {selected_period_label}")
     fig.update_xaxes(rangeslider_visible=False)
     fig.update_yaxes(tickprefix="$")
 
@@ -368,13 +378,16 @@ fig_heat = go.Figure(go.Heatmap(
     showscale=True,
     colorbar=dict(tickfont=dict(color=DARK_TEXT), title=dict(text="%", font=dict(color=DARK_TEXT))),
 ))
-fig_heat.update_layout(
-    **{**PLOTLY_LAYOUT, "hovermode": "closest"},
-    title=dict(text="Monthly Return (%)", font_color="#C8D8EC", font_size=14),
+apply_layout(
+    fig_heat,
+    hovermode="closest",
     height=max(260, 36 * len(selected_names)),
-    xaxis=dict(tickfont=dict(size=10), gridcolor=DARK_GRID),
-    yaxis=dict(tickfont=dict(size=11)),
     margin=dict(l=0, r=60, t=40, b=0),
+    title_text="Monthly Return (%)",
+    extra=dict(
+        xaxis=dict(tickfont=dict(size=10), gridcolor=DARK_GRID),
+        yaxis=dict(tickfont=dict(size=11)),
+    ),
 )
 st.plotly_chart(fig_heat, use_container_width=True)
 
@@ -406,13 +419,17 @@ with col_l:
         hovertemplate="<b>%{y}</b><br>Return: %{x:.2f}%<extra></extra>",
     ))
     fig_bar.add_vline(x=0, line_color="#4A6080", line_width=1)
-    fig_bar.update_layout(
-        **{**PLOTLY_LAYOUT, "hovermode": "y"},
-        title=dict(text=f"Total Return — {selected_period_label}", font_color="#C8D8EC", font_size=13),
+    apply_layout(
+        fig_bar,
+        hovermode="y",
         height=340,
-        xaxis=dict(ticksuffix="%", gridcolor=DARK_GRID, zerolinecolor="#4A6080"),
-        yaxis=dict(gridcolor="rgba(0,0,0,0)"),
         margin=dict(l=0, r=60, t=40, b=0),
+        title_text=f"Total Return — {selected_period_label}",
+        extra=dict(
+            title=dict(text=f"Total Return — {selected_period_label}", font_color="#C8D8EC", font_size=13),
+            xaxis=dict(ticksuffix="%", gridcolor=DARK_GRID, zerolinecolor="#4A6080"),
+            yaxis=dict(gridcolor="rgba(0,0,0,0)"),
+        ),
     )
     st.plotly_chart(fig_bar, use_container_width=True)
 
@@ -445,13 +462,16 @@ with col_r:
         textfont=dict(color="#C8D8EC", size=11),
         hovertemplate="<b>%{y}</b><br>Vol: %{x:.2f}%<extra></extra>",
     ))
-    fig_vol.update_layout(
-        **{**PLOTLY_LAYOUT, "hovermode": "y"},
-        title=dict(text="Annualized Volatility (30-day rolling)", font_color="#C8D8EC", font_size=13),
+    apply_layout(
+        fig_vol,
+        hovermode="y",
         height=340,
-        xaxis=dict(ticksuffix="%", gridcolor=DARK_GRID),
-        yaxis=dict(gridcolor="rgba(0,0,0,0)"),
         margin=dict(l=0, r=60, t=40, b=0),
+        title_text="Annualized Volatility (30-day rolling)",
+        extra=dict(
+            xaxis=dict(ticksuffix="%", gridcolor=DARK_GRID),
+            yaxis=dict(gridcolor="rgba(0,0,0,0)"),
+        ),
     )
     st.plotly_chart(fig_vol, use_container_width=True)
 
@@ -478,11 +498,12 @@ if len(selected_names) >= 3:
         hovertemplate="<b>%{y} × %{x}</b><br>Correlation: %{z:.3f}<extra></extra>",
         colorbar=dict(tickfont=dict(color=DARK_TEXT)),
     ))
-    fig_corr.update_layout(
-        **{**PLOTLY_LAYOUT, "hovermode": "closest"},
-        title=dict(text="Daily Return Correlation", font_color="#C8D8EC", font_size=14),
+    apply_layout(
+        fig_corr,
+        hovermode="closest",
         height=420,
         margin=dict(l=0, r=60, t=40, b=0),
+        title_text="Daily Return Correlation",
     )
     st.plotly_chart(fig_corr, use_container_width=True)
 
