@@ -63,14 +63,14 @@ labels_list = [
 st.markdown('<div class="sec-head">밴드갭 분포 시각화</div>', unsafe_allow_html=True)
 
 fig, axes = plt.subplots(1, 3, figsize=(13, 4.5))
-fig.patch.set_facecolor("#080f1a")
+fig.patch.set_facecolor("white")
 
 # 히스토그램
 ax1 = axes[0]
-ax1.set_facecolor("#0d1929")
+ax1.set_facecolor("#f8fafc")
 n_bins = min(25, len(set(round(b, 1) for b in bg_vals)))
 counts, edges, patches_h = ax1.hist(bg_vals, bins=n_bins, color="#006fa6",
-                                     edgecolor="#0d1929", linewidth=.5)
+                                     edgecolor="white", linewidth=.5)
 for patch, mid in zip(patches_h, [(edges[i] + edges[i+1]) / 2 for i in range(len(edges)-1)]):
     patch.set_facecolor("#ffa500" if mid == 0 else ("#00c864" if mid < 3 else "#9060ff"))
 ax1.axvline(3.0, color="white", lw=1.2, ls="--", alpha=0.5)
@@ -79,17 +79,17 @@ legend_patches = [
     mpatches.Patch(color="#00c864", label="반도체 (0~3 eV)"),
     mpatches.Patch(color="#9060ff", label="부도체 (>3 eV)"),
 ]
-ax1.legend(handles=legend_patches, fontsize=8, facecolor="#0d1929",
-           edgecolor="#1e3050", labelcolor="white")
+ax1.legend(handles=legend_patches, fontsize=8, facecolor="#f8fafc",
+           edgecolor="#dde3ea", labelcolor="#1a1a2e")
 ax1.set_title("밴드갭 분포", color="white", fontweight="bold", pad=10)
-ax1.set_xlabel("밴드갭 (eV)", color="#7fa8cc")
-ax1.set_ylabel("소재 수", color="#7fa8cc")
-ax1.tick_params(colors="#5580a0")
-for sp in ax1.spines.values(): sp.set_color("#1e3050")
+ax1.set_xlabel("밴드갭 (eV)", color="#333333")
+ax1.set_ylabel("소재 수", color="#333333")
+ax1.tick_params(colors="#333333")
+for sp in ax1.spines.values(): sp.set_color("#dde3ea")
 
 # 파이 차트
 ax2 = axes[1]
-ax2.set_facecolor("#0d1929")
+ax2.set_facecolor("#f8fafc")
 cnt = {k: labels_list.count(k) for k in ["도체", "반도체", "부도체"]}
 pie_vals = [v for v in cnt.values() if v > 0]
 pie_labs = [k for k, v in cnt.items() if v > 0]
@@ -99,23 +99,23 @@ _, _, autotexts = ax2.pie(
     colors=[pie_cols_map[l] for l in pie_labs],
     autopct="%1.0f%%", startangle=90,
     textprops={"color": "white", "fontsize": 10},
-    wedgeprops={"linewidth": 2, "edgecolor": "#080f1a"},
+    wedgeprops={"linewidth": 2, "edgecolor": "#ffffff"},
 )
 for at in autotexts: at.set_fontsize(9)
 ax2.set_title("도체·반도체·부도체 비율", color="white", fontweight="bold", pad=10)
 
 # 산점도 (밴드갭 vs 밀도)
 ax3 = axes[2]
-ax3.set_facecolor("#0d1929")
+ax3.set_facecolor("#f8fafc")
 for r in results:
     c = "#ffa500" if (r["is_metal"] or r["band_gap"] == 0) else ("#00c864" if r["band_gap"] < 3 else "#9060ff")
     ax3.scatter(r["band_gap"], r["density"], color=c, s=40, alpha=0.75, edgecolors="none")
 ax3.axvline(3.0, color="white", lw=1, ls="--", alpha=0.4)
 ax3.set_title("밴드갭 vs 밀도", color="white", fontweight="bold", pad=10)
-ax3.set_xlabel("밴드갭 (eV)", color="#7fa8cc")
-ax3.set_ylabel("밀도 (g/cm³)", color="#7fa8cc")
-ax3.tick_params(colors="#5580a0")
-for sp in ax3.spines.values(): sp.set_color("#1e3050")
+ax3.set_xlabel("밴드갭 (eV)", color="#333333")
+ax3.set_ylabel("밀도 (g/cm³)", color="#333333")
+ax3.tick_params(colors="#333333")
+for sp in ax3.spines.values(): sp.set_color("#dde3ea")
 
 fig.tight_layout(pad=2)
 st.pyplot(fig)
