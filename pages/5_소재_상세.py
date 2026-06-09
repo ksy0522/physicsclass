@@ -60,20 +60,20 @@ label, badge_cls, color = classify(d["band_gap"], d["is_metal"])
 
 # ── 소재 헤더 카드 ────────────────────────────────────────────────────────────
 st.markdown(f"""
-<div style="background:linear-gradient(135deg,#0d1929,#0a2040);
+<div style="background:linear-gradient(135deg,#f8fafc,#e8f0fa);
             border:1px solid {color}55; border-radius:14px;
             padding:1.5rem 2rem; margin:.8rem 0">
   <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap">
     <div style="text-align:center; min-width:80px">
       <div style="font-family:'Space Mono',monospace; font-size:2.8rem;
                   font-weight:700; color:{color}; line-height:1">{d['band_gap']}</div>
-      <div style="font-size:.68rem; color:#5580a0; margin-top:4px">eV (밴드갭)</div>
+      <div style="font-size:.68rem; color:#4a6a8a; margin-top:4px">eV (밴드갭)</div>
     </div>
     <div style="flex:1">
       <span class="type-badge {badge_cls}">{label}</span>
       <div style="font-family:'Space Mono',monospace; font-size:2rem;
                   font-weight:700; color:#fff; margin:.2rem 0">{d['formula']}</div>
-      <div style="font-size:.82rem; color:#5580a0">{d['id']} &nbsp;·&nbsp;
+      <div style="font-size:.82rem; color:#4a6a8a">{d['id']} &nbsp;·&nbsp;
         {'실험 확인' if not d['theoretical'] else 'DFT 예측값'}</div>
     </div>
   </div>
@@ -99,12 +99,12 @@ props = [
 pc = st.columns(5)
 for i, (k, v) in enumerate(props):
     pc[i % 5].markdown(f"""
-    <div style="background:#0d1929; border:1px solid #1e3050; border-radius:8px;
+    <div style="background:#f8fafc; border:1px solid #dde3ea; border-radius:8px;
                 padding:.75rem 1rem; margin-bottom:.6rem">
-      <div style="font-size:.68rem; color:#5580a0; margin-bottom:.3rem; text-transform:uppercase;
+      <div style="font-size:.68rem; color:#4a6a8a; margin-bottom:.3rem; text-transform:uppercase;
                   letter-spacing:.06em">{k}</div>
       <div style="font-family:'Space Mono',monospace; font-size:.9rem;
-                  color:#e8edf5; font-weight:600">{v}</div>
+                  color:#1a1a2e; font-weight:600">{v}</div>
     </div>
     """, unsafe_allow_html=True)
 
