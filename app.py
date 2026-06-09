@@ -44,13 +44,13 @@ features = [
 cols = st.columns(4)
 for col, (icon, title, desc, color) in zip(cols, features):
     col.markdown(f"""
-    <div style="background:#0d1929; border:1px solid {color}44;
+    <div style="background:#f8fafc; border:1px solid {color}44;
                 border-top:3px solid {color}; border-radius:12px;
                 padding:1.4rem; min-height:160px">
       <div style="font-size:2rem">{icon}</div>
       <div style="font-family:'Space Mono',monospace; font-size:.95rem;
-                  font-weight:700; color:#e8edf5; margin:.5rem 0 .3rem">{title}</div>
-      <div style="font-size:.82rem; color:#5580a0; white-space:pre-line; line-height:1.5">{desc}</div>
+                  font-weight:700; color:#1a1a2e; margin:.5rem 0 .3rem">{title}</div>
+      <div style="font-size:.82rem; color:#4a6a8a; white-space:pre-line; line-height:1.5">{desc}</div>
     </div>
     """, unsafe_allow_html=True)
 
